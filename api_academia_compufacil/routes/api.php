@@ -15,6 +15,8 @@ use App\Http\Controllers\Tienda\ProfileClientController;
 use App\Http\Controllers\Admin\Course\SeccionGController;
 use App\Http\Controllers\Admin\Course\CategorieController;
 use App\Http\Controllers\Admin\Discount\DiscountController;
+use App\Http\Controllers\CheckoutStoreController;
+use App\Http\Controllers\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +32,7 @@ use App\Http\Controllers\Admin\Discount\DiscountController;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+// Route::post('/checkout-with-comprobante', [CheckoutController::class, 'checkoutWithComprobante'])->middleware('auth:api');
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
@@ -41,6 +43,8 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
     Route::post('/me', [AuthController::class, 'me'])->name('me');
+    Route::post('/checkout-with-comprobante', [CheckoutController::class, 'checkoutWithComprobante']);
+
 });
 Route::group([
     'middleware' => 'api',
@@ -56,18 +60,26 @@ Route::group([
     Route::resource('/course',CourseGController::class);
     Route::post('/course/upload_video/{id}',[CourseGController::class, "upload_video"]);
     Route::post('/course/{id}',[CourseGController::class, "update"]);
-
+    
     Route::resource('/course-section',SeccionGController::class);
-
+    
     Route::resource('/course-clases',ClaseGController::class);
     Route::post('/course-clases-file',[ClaseGController::class, "addFiles"]);
     Route::delete('/course-clases-file/{id}',[ClaseGController::class, "removeFiles"]);
     Route::post('/course-clases/upload_video/{id}',[ClaseGController::class, "upload_video"]);
-
+    
     Route::get('/coupon/config',[CouponController::class, "config"]);
     Route::resource('/coupon',CouponController::class);
-
+    
     Route::resource('/discount',DiscountController::class);
+
+    Route::post('/course/activate', [CourseActivationController::class, 'activateCurse']);
+
+    //Rutas para el detalle de la venta
+    Route::get('/sales', [SalesController::class, 'index']);
+    Route::get('/sales/{id}', [SalesController::class, 'show']);
+    Route::put('/course-students/{id}', [SalesController::class, 'updateCourseStudentState']);
+
 });
 
 Route::group(["prefix" => "ecommerce"],function($router){
@@ -87,5 +99,6 @@ Route::group(["prefix" => "ecommerce"],function($router){
         Route::post('/profile',[ProfileClientController::class,"profile"]);
         Route::post('/update_client',[ProfileClientController::class,"update_client"]);
         Route::resource('/review',ReviewController::class);
+        Route::post('/checkout-with-comprobante', [CheckoutStoreController::class, 'checkoutWithComprobante']);
     });
 });

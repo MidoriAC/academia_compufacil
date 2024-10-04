@@ -24,16 +24,7 @@
           <nav class="mainmenu-nav">
             <ul class="mainmenu">
               <li class="with-megamenu has-menu-child-item position-static">
-                <a href="#">Home <i class="feather-chevron-down"></i></a>
-              </li>
-              <li class="with-megamenu has-menu-child-item position-static">
-                <a href="#">Cursos <i class="feather-chevron-down"></i></a>
-              </li>
-              <li class="with-megamenu has-menu-child-item position-static">
-                <a href="#">Nosotros <i class="feather-chevron-down"></i></a>
-              </li>
-              <li class="with-megamenu has-menu-child-item position-static">
-                <a href="#">Contactanos <i class="feather-chevron-down"></i></a>
+                <a href="#">Inicio <i class=""></i></a>
               </li>
             </ul>
           </nav>
@@ -48,7 +39,7 @@
               </a>
             </li>
 
-            <!-- <li class="access-icon rbt-mini-cart">
+            <li class="access-icon rbt-mini-cart">
               <a
                 class="rbt-cart-sidenav-activation rbt-round-btn"
                 href="#"
@@ -57,7 +48,7 @@
                 <i class="feather-shopping-cart"></i>
                 <span class="rbt-cart-count">{{ listCarts.length }}</span>
               </a>
-            </li> -->
+            </li>
 
             <li class="account-access rbt-user-wrapper d-none d-xl-block">
               <a href="#" *ngIf="user"
@@ -82,56 +73,6 @@
                       >
                     </div>
                   </div>
-                  <ul class="user-list-wrapper" *ngIf="user">
-                    <li>
-                      <a href="instructor-dashboard.html">
-                        <i class="feather-home"></i>
-                        <span>My Dashboard</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="feather-bookmark"></i>
-                        <span>Bookmark</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-enrolled-courses.html">
-                        <i class="feather-shopping-bag"></i>
-                        <span>Enrolled Courses</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-wishlist.html">
-                        <i class="feather-heart"></i>
-                        <span>Wishlist</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-reviews.html">
-                        <i class="feather-star"></i>
-                        <span>Reviews</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-my-quiz-attempts.html">
-                        <i class="feather-list"></i>
-                        <span>My Quiz Attempts</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-order-history.html">
-                        <i class="feather-clock"></i>
-                        <span>Order History</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-quiz-attempts.html">
-                        <i class="feather-message-square"></i>
-                        <span>Question & Answer</span>
-                      </a>
-                    </li>
-                  </ul>
 
                   <ul class="user-list-wrapper">
                     <li *ngIf="user">
@@ -170,56 +111,6 @@
                       >
                     </div>
                   </div>
-                  <ul class="user-list-wrapper">
-                    <li>
-                      <a href="instructor-dashboard.html">
-                        <i class="feather-home"></i>
-                        <span>My Dashboard</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i class="feather-bookmark"></i>
-                        <span>Bookmark</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-enrolled-courses.html">
-                        <i class="feather-shopping-bag"></i>
-                        <span>Enrolled Courses</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-wishlist.html">
-                        <i class="feather-heart"></i>
-                        <span>Wishlist</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-reviews.html">
-                        <i class="feather-star"></i>
-                        <span>Reviews</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-my-quiz-attempts.html">
-                        <i class="feather-list"></i>
-                        <span>My Quiz Attempts</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-order-history.html">
-                        <i class="feather-clock"></i>
-                        <span>Order History</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="instructor-quiz-attempts.html">
-                        <i class="feather-message-square"></i>
-                        <span>Question & Answer</span>
-                      </a>
-                    </li>
-                  </ul>
                   <hr class="mt--10 mb--10" />
                   <ul class="user-list-wrapper">
                     <li>
@@ -1495,7 +1386,7 @@
     <div class="inner-top">
       <div class="content">
         <div class="title">
-          <h4 class="title mb--0">Your shopping cart</h4>
+          <h4 class="title mb--0">Tu carrito de compras</h4>
         </div>
         <div class="rbt-btn-close" id="btn_sideNavClose">
           <button class="minicart-close-button rbt-round-btn">
@@ -1521,7 +1412,7 @@
               </h6>
 
               <span class="quantity"
-                ><span class="price">{{ cart.total }} USD</span></span
+                ><span class="price">{{ cart.total }} GTQ</span></span
               >
             </div>
             <div class="close-btn">
@@ -1538,7 +1429,7 @@
       <hr class="mb--0" />
       <div class="rbt-cart-subttotal">
         <p class="subtotal"><strong>Subtotal:</strong></p>
-        <p class="price">{{ totalSum }} USD</p>
+        <p class="price">{{ totalSum }} GTQ</p>
       </div>
       <hr class="mb--0" />
       <div class="rbt-minicart-bottom mt--20">
@@ -1547,7 +1438,7 @@
             class="rbt-btn btn-border icon-hover w-100 text-center"
             href="/carrito-de-compra"
           >
-            <span class="btn-text">View Cart</span>
+            <span class="btn-text">Ver carrito</span>
             <span class="btn-icon"><i class="feather-arrow-right"></i></span>
           </a>
         </div>

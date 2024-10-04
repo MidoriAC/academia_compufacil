@@ -1,0 +1,129 @@
+<span
+  class="spinner-border spinner-border-sm align-middle ms-2"
+  *ngIf="isLoading | async"
+></span>
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <div class="d-flex align-items-center position-relative my-1">
+        <input
+          type="text"
+          [(ngModel)]="search"
+          data-kt-user-table-filter="search"
+          class="form-control form-control-solid w-250px ps-14"
+          placeholder="Search Sale"
+          (keyup.enter)="listSales()"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-4">
+    <table
+      class="table align-middle table-row-dashed fs-6 gy-5"
+      id="kt_table_sales"
+    >
+      <thead>
+        <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+          <th class="min-w-125px">Estudiante</th>
+          <th class="min-w-125px">Metodo de pago</th>
+          <th class="min-w-125px">Total</th>
+          <th class="min-w-125px">Imagen de transacción</th>
+          <th class="text-end min-w-100px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 fw-bold">
+        <ng-container *ngFor="let SALE of SALES">
+          <tr>
+            <td>{{ SALE.user_name }}</td>
+            <td>{{ SALE.method_payment }}</td>
+            <td>{{ SALE.total }} {{ SALE.currency_total }}</td>
+            <td>
+              <img
+                [src]="SALE.n_transaccion"
+                alt="Transaction Image"
+                class="w-100px h-100px object-fit-cover"
+                (click)="openImageModal(SALE.n_transaccion, imageModal)"
+              />
+            </td>
+            <td class="text-end">
+              <button
+                class="btn btn-sm btn-primary"
+                (click)="viewSaleDetails(SALE)"
+              >
+                Ver Cursos adquiridos
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #imageModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Imagen de Transacción</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <img [src]="selectedImage" alt="Transaction Image" class="img-fluid" />
+  </div>
+</ng-template>
+<!-- Modal for sale details -->
+<ng-template #saleDetailsModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Detalle de compra</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Curso</th>
+          <th>Precio</th>
+          <th>Status</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let detail of saleDetails.details">
+          <tr>
+            <td>{{ detail.course_title }}</td>
+            <td>{{ detail.total }}</td>
+            <td>
+              {{ detail.course_student_state === 1 ? "Activo" : "Inactivo" }}
+            </td>
+            <td>
+              <button
+                class="btn btn-sm"
+                [ngClass]="{
+                  'btn-danger': detail.course_student_state === 1,
+                  'btn-primary': detail.course_student_state === 0
+                }"
+                (click)="toggleCourseState(detail)"
+              >
+                {{
+                  detail.course_student_state === 1 ? "Desactivar" : "Activar"
+                }}
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

@@ -104,7 +104,7 @@
               return i.KtG(d.addCart(s, d.DESCOUNT_BANNER));
             }),
             i._UZ(43, "i", 230),
-            i._uU(44, " Add To Cart "),
+            i._uU(44, " Añadir al carrito "),
             i.qZA()()()()(),
             i.BQk();
         }
@@ -264,7 +264,7 @@
               return i.KtG(d.addCart(s, d.DESCOUNT_FLASH));
             }),
             i._UZ(45, "i", 230),
-            i._uU(46, " Add To Cart"),
+            i._uU(46, " Añadir al carrito"),
             i.qZA()()()()(),
             i.BQk();
         }
@@ -482,7 +482,7 @@
               return i.KtG(d.addCart(s));
             }),
             i._UZ(53, "i", 230),
-            i._uU(54, " Add To Cart"),
+            i._uU(54, " Añadir al carrito"),
             i.qZA()()()()(),
             i.BQk();
         }
@@ -643,7 +643,7 @@
               return i.KtG(d.addCart(s));
             }),
             i._UZ(40, "i", 230),
-            i._uU(41, " Add To Cart"),
+            i._uU(41, " Añadir al carrito"),
             i.qZA()()()()(),
             i.BQk();
         }

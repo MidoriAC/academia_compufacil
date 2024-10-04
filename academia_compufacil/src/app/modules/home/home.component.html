@@ -144,7 +144,8 @@
                             onclick="return false;"
                             (click)="addCart(COURSE, DESCOUNT_BANNER)"
                           >
-                            <i class="feather-shopping-cart"></i> Add To Cart
+                            <i class="feather-shopping-cart"></i> Añadir al
+                            carrito
                           </a>
                         </div>
                       </div>
@@ -272,40 +273,6 @@
                       </a>
                     </div>
                     <div class="rbt-card-body">
-                      <div class="rbt-card-top">
-                        <div class="rbt-review">
-                          <div class="rating">
-                            <i
-                              class="fas fa-star"
-                              [ngClass]="{ rating: COURSE.avg_reviews < 1 }"
-                            ></i>
-                            <i
-                              class="fas fa-star"
-                              [ngClass]="{ rating: COURSE.avg_reviews < 2 }"
-                            ></i>
-                            <i
-                              class="fas fa-star"
-                              [ngClass]="{ rating: COURSE.avg_reviews < 3 }"
-                            ></i>
-                            <i
-                              class="fas fa-star"
-                              [ngClass]="{ rating: COURSE.avg_reviews < 4 }"
-                            ></i>
-                            <i
-                              class="fas fa-star"
-                              [ngClass]="{ rating: COURSE.avg_reviews < 5 }"
-                            ></i>
-                          </div>
-                          <span class="rating-count">
-                            ({{ COURSE.count_reviews }} Reviews)</span
-                          >
-                        </div>
-                        <div class="rbt-bookmark-btn">
-                          <a class="rbt-round-btn" title="Bookmark" href="#"
-                            ><i class="feather-bookmark"></i
-                          ></a>
-                        </div>
-                      </div>
                       <h4 class="rbt-card-title">
                         <a
                           [routerLink]="['landing-curso/', COURSE.slug]"
@@ -346,7 +313,8 @@
                           href="#"
                           onclick="return false;"
                           (click)="addCart(COURSE, DESCOUNT_FLASH)"
-                          ><i class="feather-shopping-cart"></i> Add To Cart</a
+                          ><i class="feather-shopping-cart"></i> Añadir al
+                          carrito</a
                         >
                       </div>
                     </div>
@@ -401,40 +369,6 @@
                 </a>
               </div>
               <div class="rbt-card-body">
-                <div class="rbt-card-top">
-                  <div class="rbt-review">
-                    <div class="rating">
-                      <i
-                        class="fas fa-star"
-                        [ngClass]="{ rating: COURSE.avg_reviews < 1 }"
-                      ></i>
-                      <i
-                        class="fas fa-star"
-                        [ngClass]="{ rating: COURSE.avg_reviews < 2 }"
-                      ></i>
-                      <i
-                        class="fas fa-star"
-                        [ngClass]="{ rating: COURSE.avg_reviews < 3 }"
-                      ></i>
-                      <i
-                        class="fas fa-star"
-                        [ngClass]="{ rating: COURSE.avg_reviews < 4 }"
-                      ></i>
-                      <i
-                        class="fas fa-star"
-                        [ngClass]="{ rating: COURSE.avg_reviews < 5 }"
-                      ></i>
-                    </div>
-                    <span class="rating-count">
-                      ({{ COURSE.count_reviews }} Reviews)</span
-                    >
-                  </div>
-                  <div class="rbt-bookmark-btn">
-                    <a class="rbt-round-btn" title="Bookmark" href="#"
-                      ><i class="feather-bookmark"></i
-                    ></a>
-                  </div>
-                </div>
                 <h4 class="rbt-card-title">
                   <a [routerLink]="['landing-curso/', COURSE.slug]">{{
                     COURSE.title
@@ -480,7 +414,7 @@
                     href="#"
                     onclick="return false;"
                     (click)="addCart(COURSE)"
-                    ><i class="feather-shopping-cart"></i> Add To Cart</a
+                    ><i class="feather-shopping-cart"></i> Añadir al carrito</a
                   >
                 </div>
               </div>
@@ -513,7 +447,7 @@
   <!-- End Course Area -->
 
   <!-- Start About Area  -->
-  <div
+  <!-- <div
     class="rbt-about-area bg-color-white rbt-section-gapTop pb_md--80 pb_sm--80 about-style-1"
   >
     <div class="container">
@@ -560,9 +494,9 @@
               large language ocean.
             </p>
 
-            <!-- Start Feature List  -->
+            Start Feature List 
 
-            <div class="rbt-feature-wrapper mt--20 ml_dec_20">
+             <div class="rbt-feature-wrapper mt--20 ml_dec_20">
               <div class="rbt-feature feature-style-2 rbt-radius">
                 <div class="icon bg-pink-opacity">
                   <i class="feather-heart"></i>
@@ -589,10 +523,10 @@
                   </p>
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <!-- End Feature List  -->
-            <div class="about-btn mt--40">
+  <!-- End Feature List  -->
+  <!-- <div class="about-btn mt--40">
               <a class="rbt-btn btn-gradient hover-icon-reverse" href="#">
                 <span class="icon-reverse-wrapper">
                   <span class="btn-text">More About Us</span>
@@ -609,7 +543,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- End About Area  -->
 
   <!-- Start Call To Action  -->
@@ -775,50 +709,6 @@
                           </div>
                         </div>
                         <div class="rbt-card-body">
-                          <div class="rbt-card-top">
-                            <div class="rbt-review">
-                              <div class="rating">
-                                <i
-                                  class="fas fa-star"
-                                  [ngClass]="{
-                                    rating: courses.avg_reviews < 1
-                                  }"
-                                ></i>
-                                <i
-                                  class="fas fa-star"
-                                  [ngClass]="{
-                                    rating: courses.avg_reviews < 2
-                                  }"
-                                ></i>
-                                <i
-                                  class="fas fa-star"
-                                  [ngClass]="{
-                                    rating: courses.avg_reviews < 3
-                                  }"
-                                ></i>
-                                <i
-                                  class="fas fa-star"
-                                  [ngClass]="{
-                                    rating: courses.avg_reviews < 4
-                                  }"
-                                ></i>
-                                <i
-                                  class="fas fa-star"
-                                  [ngClass]="{
-                                    rating: courses.avg_reviews < 5
-                                  }"
-                                ></i>
-                              </div>
-                              <span class="rating-count">
-                                ({{ courses.count_reviews }} Reviews)</span
-                              >
-                            </div>
-                            <div class="rbt-bookmark-btn">
-                              <a class="rbt-round-btn" title="Bookmark" href="#"
-                                ><i class="feather-bookmark"></i
-                              ></a>
-                            </div>
-                          </div>
                           <h4 class="rbt-card-title">
                             <a
                               [routerLink]="['landing-curso/', courses.slug]"

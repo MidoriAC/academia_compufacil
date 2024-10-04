@@ -9,6 +9,7 @@ use App\Models\CoursesStudent;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Ecommerce\Cart\CartResource;
 use App\Http\Resources\Ecommerce\Cart\CartCollection;
+use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -131,6 +132,10 @@ class CartController extends Controller
         $carts = Cart::where("user_id",auth('api')->user()->id)->get();
 
         return response()->json(["carts" => CartCollection::make($carts)]);
+    }
+
+    public function listStudentPay(){
+
     }
     /**
      * Display the specified resource.

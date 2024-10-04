@@ -24,7 +24,9 @@ class HomeController extends Controller
         
         $courses = Course::where("state",2)->inRandomOrder()->limit(3)->get();
         
-        $categories_courses = Categorie::where("categorie_id",NULL)->withCount("courses")
+        $categories_courses = Categorie::where("categorie_id",NULL) ->withCount(['courses' => function ($query) {
+            $query->where('state', 2); // Filtra cursos con state 2
+        }])
                         ->having("courses_count",">",0)
                         ->orderBy("id","desc")->take(5)->get();
         $group_courses_categories = collect([]);
@@ -39,7 +41,7 @@ class HomeController extends Controller
             ]);
         }
 
-        date_default_timezone_set("America/Lima");
+        date_default_timezone_set("America/Guatemala");
         $DESCOUNT_BANNER = Discount::where("type_campaing",3)->where("state",1)
                             ->where("start_date","<=",today())
                             ->where("end_date",">=",today())
@@ -52,7 +54,7 @@ class HomeController extends Controller
             }
         }
 
-        date_default_timezone_set("America/Lima");
+        date_default_timezone_set("America/Guatemala");
         $DESCOUNT_FLASH = Discount::where("type_campaing",2)->where("state",1)
                             ->where("start_date","<=",today())
                             ->where("end_date",">=",today())

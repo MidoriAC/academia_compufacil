@@ -20,11 +20,11 @@ class ProfileClientController extends Controller
     {
         $user = auth('api')->user();
 
-        $enrolled_course_count = CoursesStudent::where("user_id",$user->id)->count();
+        $enrolled_course_count = CoursesStudent::where("user_id",$user->id)->where('state', '!=', 0 )->count();
         $active_course_count = CoursesStudent::where("user_id",$user->id)->where("clases_checkeds","<>",NULL)->count();
         $termined_course_count = CoursesStudent::where("user_id",$user->id)->where("state",2)->count();
 
-        $enrolled_courses = CoursesStudent::where("user_id",$user->id)->get();
+        $enrolled_courses = CoursesStudent::where("user_id",$user->id)->where('state', '!=', 0 )->get();
         $active_courses = CoursesStudent::where("user_id",$user->id)->where("clases_checkeds","<>",NULL)->get();
         $termined_courses = CoursesStudent::where("user_id",$user->id)->where("state",2)->get();
 

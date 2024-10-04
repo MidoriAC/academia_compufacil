@@ -43,7 +43,7 @@ class Course extends Model
 
     public function setUpdatedAtAttribute($value)
     {
-        date_default_timezone_set("America/Lima");
+        date_default_timezone_set("America/Guatemala");
         $this->attributes["updated_at"] = Carbon::now();
     }
 

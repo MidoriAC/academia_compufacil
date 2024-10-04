@@ -409,7 +409,7 @@
               return t.KtG(s.addCart());
             }),
             t._UZ(53, "i", 200),
-            t._uU(54, " Add To Cart"),
+            t._uU(54, " Añadir al carrito"),
             t.qZA()()()()(),
             t.BQk();
         }
@@ -505,7 +505,7 @@
               return t.KtG(s.addCart());
             }),
             t.TgZ(3, "span", 208),
-            t._uU(4, "Add to Cart"),
+            t._uU(4, "Añadir al carrito"),
             t.qZA(),
             t.TgZ(5, "span", 209),
             t._UZ(6, "i", 210),
@@ -1073,7 +1073,7 @@
             t.qZA(),
             t.TgZ(52, "a", 215),
             t._UZ(53, "i", 200),
-            t._uU(54, " Add To Cart"),
+            t._uU(54, " Añadir al carrito"),
             t.qZA()()()()(),
             t.BQk()),
           2 & i)
@@ -2172,7 +2172,7 @@
               return t.KtG(_.addCart(o));
             }),
             t._UZ(53, "i", 121),
-            t._uU(54, " Add To Cart"),
+            t._uU(54, " Añadir al carrito"),
             t.qZA()()()()(),
             t.BQk();
         }

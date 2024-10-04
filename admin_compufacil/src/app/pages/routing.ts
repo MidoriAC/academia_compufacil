@@ -46,12 +46,19 @@ const Routing: Routes = [
   {
     path: 'categorias',
     loadChildren: () =>
-      import('../modules/categories/categories.module').then((m) => m.CategoriesModule),
+      import('../modules/categories/categories.module').then(
+        (m) => m.CategoriesModule
+      ),
   },
   {
     path: 'cursos',
     loadChildren: () =>
       import('../modules/course/course.module').then((m) => m.CourseModule),
+  },
+  {
+    path: 'sales',
+    loadChildren: () =>
+      import('../modules/sales/sales.module').then((m) => m.SalesModule),
   },
   {
     path: 'cupones',
@@ -61,7 +68,9 @@ const Routing: Routes = [
   {
     path: 'descuento',
     loadChildren: () =>
-      import('../modules/discount/discount.module').then((m) => m.DiscountModule),
+      import('../modules/discount/discount.module').then(
+        (m) => m.DiscountModule
+      ),
   },
   {
     path: '',
