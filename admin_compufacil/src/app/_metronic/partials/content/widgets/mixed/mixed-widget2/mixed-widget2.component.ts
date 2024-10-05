@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
+import { DashboardService } from '../../dashboard.service';
 @Component({
   selector: 'app-mixed-widget2',
   templateUrl: './mixed-widget2.component.html',
@@ -9,14 +10,35 @@ export class MixedWidget2Component implements OnInit {
   @Input() strokeColor: string = '';
   @Input() chartHeight: string = '';
   chartOptions: any = {};
+  dashboardStats: any = {
+    app_users: 0,
+    active_courses: 0,
+    platform_students: 0,
+    sold_courses: 0,
+  };
 
-  constructor() {}
+  constructor(
+    private dashboardService: DashboardService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.chartOptions = getChartOptions(
       this.chartHeight,
       this.chartColor,
       this.strokeColor
+    );
+    this.loadDashboardStats();
+  }
+  loadDashboardStats() {
+    this.dashboardService.getDashboardStats().subscribe(
+      (data: any) => {
+        this.dashboardStats = data;
+        this.cdr.detectChanges();
+      },
+      (error) => {
+        console.error('Error loading dashboard stats:', error);
+      }
     );
   }
 }

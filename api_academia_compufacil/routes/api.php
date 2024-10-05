@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\Course\CategorieController;
 use App\Http\Controllers\Admin\Discount\DiscountController;
 use App\Http\Controllers\CheckoutStoreController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +81,9 @@ Route::group([
     Route::get('/sales/{id}', [SalesController::class, 'show']);
     Route::put('/course-students/{id}', [SalesController::class, 'updateCourseStudentState']);
 
+    //Ruta para el dashboard
+    Route::get('/dashboard-stats', [DashboardController::class, 'getDashboardStats']);
+
 });
 
 Route::group(["prefix" => "ecommerce"],function($router){
@@ -99,6 +103,8 @@ Route::group(["prefix" => "ecommerce"],function($router){
         Route::post('/profile',[ProfileClientController::class,"profile"]);
         Route::post('/update_client',[ProfileClientController::class,"update_client"]);
         Route::resource('/review',ReviewController::class);
+
+        //Procese de checkout del estudiante
         Route::post('/checkout-with-comprobante', [CheckoutStoreController::class, 'checkoutWithComprobante']);
     });
 });
