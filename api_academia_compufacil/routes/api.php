@@ -106,5 +106,8 @@ Route::group(["prefix" => "ecommerce"],function($router){
 
         //Procese de checkout del estudiante
         Route::post('/checkout-with-comprobante', [CheckoutStoreController::class, 'checkoutWithComprobante']);
+
+        //* Subir tareas
+        Route::post('/upload_activity', [HomeController::class, 'uploadActivity']);
     });
 });

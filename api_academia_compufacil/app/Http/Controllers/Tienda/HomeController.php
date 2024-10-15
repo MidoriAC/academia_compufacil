@@ -149,6 +149,179 @@ class HomeController extends Controller
             "course" => LandingCourseResource::make($course),
         ]);
     }
+
+    //     public function course_leason(Request $request, $slug)
+    // {
+    //     $course = Course::where("slug", $slug)->first();
+
+    //     if (!$course) {
+    //         return response()->json(["message" => 403, "message_text" => "EL CURSO NO EXISTE"]);
+    //     }
+
+    //     $course_student = CoursesStudent::where("course_id", $course->id)
+    //         ->where("user_id", auth("api")->user()->id)
+    //         ->first();
+
+    //     if (!$course_student) {
+    //         return response()->json(["message" => 403, "message_text" => "TU NO ESTAS INSCRITO EN ESTE CURSO"]);
+    //     }
+
+    //     // Actualizar el progreso
+    //     $total_classes = $course->course_clases()->count();
+    //     $completed_classes = $course_student->clases_checkeds ? count(json_decode($course_student->clases_checkeds)) : 0;
+    //     $progress = ($completed_classes / $total_classes) * 100;
+
+    //     $course_student->update([
+    //         'progress' => $progress
+    //     ]);
+
+    //     $course->load('course_clases');
+
+    //     return response()->json([
+    //         "course" => LandingCourseResource::make($course),
+    //         "progress" => $progress,
+    //         "completed_classes" => $completed_classes,
+    //         "total_classes" => $total_classes,
+    //     ]);
+    // }
+//     public function course_leason(Request $request, $slug)
+// {
+//     $course = DB::table('courses')->where('slug', $slug)->first();
+
+//     if (!$course) {
+//         return response()->json(["message" => 403, "message_text" => "EL CURSO NO EXISTE"]);
+//     }
+
+//     $course_student = DB::table('courses_students')
+//         ->where('course_id', $course->id)
+//         ->where('user_id', auth('api')->user()->id)
+//         ->first();
+
+//     if (!$course_student) {
+//         return response()->json(["message" => 403, "message_text" => "TU NO ESTAS INSCRITO EN ESTE CURSO"]);
+//     }
+
+//     // Obtener el total de clases del curso
+//     $total_classes = DB::table('course_clases')
+//         ->join('course_sections', 'course_clases.course_section_id', '=', 'course_sections.id')
+//         ->where('course_sections.course_id', $course->id)
+//         ->count();
+
+//     // Calcular las clases completadas y el progreso
+//     $completed_classes = $course_student->clases_checkeds ? count(json_decode($course_student->clases_checkeds)) : 0;
+//     $progress = $total_classes > 0 ? ($completed_classes / $total_classes) * 100 : 0;
+
+//     // Actualizar el progreso del estudiante
+//     DB::table('courses_students')
+//         ->where('id', $course_student->id)
+//         ->update(['progress' => $progress]);
+
+//     // Obtener las clases del curso
+//     $course_clases = DB::table('course_clases')
+//         ->join('course_sections', 'course_clases.course_section_id', '=', 'course_sections.id')
+//         ->where('course_sections.course_id', $course->id)
+//         ->select('course_clases.*', 'course_sections.name as section_name')
+//         ->get();
+
+//     // Aquí deberías adaptar LandingCourseResource para trabajar con objetos estándar en lugar de modelos Eloquent
+//     $course_data = [
+//         'id' => $course->id,
+//         'title' => $course->title,
+//         'slug' => $course->slug,
+//         // ... otros campos del curso que necesites
+//         'course_clases' => $course_clases
+//     ];
+
+//     return response()->json([
+//         "course" => $course_data, // Reemplaza LandingCourseResource::make($course) con $course_data
+//         "progress" => $progress,
+//         "completed_classes" => $completed_classes,
+//         "total_classes" => $total_classes,
+//     ]);
+// }
+
+// public function course_leason(Request $request, $slug)
+// {
+//     $course = DB::table('courses')->where('slug', $slug)->first();
+
+//     if (!$course) {
+//         return response()->json(["message" => 403, "message_text" => "EL CURSO NO EXISTE"]);
+//     }
+
+//     $course_student = DB::table('courses_students')
+//         ->where('course_id', $course->id)
+//         ->where('user_id', auth('api')->user()->id)
+//         ->first();
+
+//     if (!$course_student) {
+//         return response()->json(["message" => 403, "message_text" => "TU NO ESTAS INSCRITO EN ESTE CURSO"]);
+//     }
+
+//     // Obtener las secciones del curso
+//     $sections = DB::table('course_sections')
+//         ->where('course_id', $course->id)
+//         ->get();
+
+//     $malla = [];
+//     foreach ($sections as $section) {
+//         $clases = DB::table('course_clases')
+//             ->where('course_section_id', $section->id)
+//             ->get();
+
+//         $malla[] = [
+//             'id' => $section->id,
+//             'name' => $section->name,
+//             'clases' => $clases
+//         ];
+//     }
+
+//     // Calcular el progreso
+//     $total_classes = DB::table('course_clases')
+//         ->join('course_sections', 'course_clases.course_section_id', '=', 'course_sections.id')
+//         ->where('course_sections.course_id', $course->id)
+//         ->count();
+
+//     $completed_classes = $course_student->clases_checkeds ? count(json_decode($course_student->clases_checkeds)) : 0;
+//     $progress = $total_classes > 0 ? ($completed_classes / $total_classes) * 100 : 0;
+
+//     // Actualizar el progreso del estudiante
+//     DB::table('courses_students')
+//         ->where('id', $course_student->id)
+//         ->update(['progress' => $progress]);
+
+//     // Obtener información del instructor
+//     $instructor = DB::table('users')
+//         ->where('id', $course->user_id)
+//         ->first();
+
+//     $course_data = [
+//         'id' => $course->id,
+//         'title' => $course->title,
+//         'slug' => $course->slug,
+//         'subtitle' => $course->subtitle,
+//         'imagen' => $course->imagen,
+//         'malla' => $malla,
+//         'instructor' => [
+//             'id' => $instructor->id,
+//             'full_name' => $instructor->name . ' ' . $instructor->surname,
+//             'avatar' => $instructor->avatar,
+//             'profesion' => $instructor->profesion,
+//             'description' => $instructor->description,
+//         ],
+//         'requirements' => json_decode($course->requirements),
+//         'who_is_it_for' => json_decode($course->who_is_it_for),
+//         'description' => $course->description,
+//         // Agrega otros campos necesarios aquí
+//     ];
+
+//     return response()->json([
+//         "course" => $course_data,
+//         "progress" => $progress,
+//         "completed_classes" => $completed_classes,
+//         "total_classes" => $total_classes,
+//     ]);
+// }
+
     public function listCourses(Request $request)
     {
         $search = $request->search;
@@ -203,4 +376,33 @@ class HomeController extends Controller
             "idiomas" => ["Español","Ingles","Portuges"],
         ]);
     }
+
+
+    //*Subir actividad:
+            public function uploadActivity(Request $request)
+        {
+            $request->validate([
+                'course_id' => 'required|exists:courses,id',
+                'class_id' => 'required|exists:course_clases,id',
+                'file' => 'required|file|max:10240', // 10MB max
+                'comments' => 'nullable|string',
+            ]);
+
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('activities', $fileName, 'public');
+
+            $activity = DB::table('student_activities')->insert([
+                'user_id' => auth('api')->id(),
+                'course_id' => $request->course_id,
+                'class_id' => $request->class_id,
+                'file' => $filePath,
+                'comments' => $request->comments,
+                'submitted_at' => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            return response()->json(['message' => 'Activity uploaded successfully', 'file_path' => $filePath]);
+        }
 }

@@ -182,6 +182,25 @@
               </div>
               <!-- End Course Content  -->
 
+              <!-- ... (código existente) ... -->
+
+              <!-- Mostrar progreso del curso -->
+              <!-- <div class="progress mt-4">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  [style.width]="progress + '%'"
+                  [attr.aria-valuenow]="progress"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                >
+                  {{ progress | number : "1.0-0" }}%
+                </div>
+              </div>
+              <p class="mt-2">
+                Clases completadas: {{ completedClasses }} de {{ totalClasses }}
+              </p> -->
+
               <!-- Start Course Resource  -->
               <div
                 class="course-content rbt-shadow-box coursecontent-wrapper mt--30 has-show-more"
@@ -208,6 +227,29 @@
                 </div>
               </div>
               <!-- End Course Resource  -->
+
+              <!-- Formulario para subir actividades -->
+              <div class="mt-4" *ngIf="clase_selected">
+                <h4>Subir actividad para: {{ clase_selected.name }}</h4>
+                <div class="form-group">
+                  <input
+                    type="file"
+                    class="form-control-file"
+                    (change)="onFileSelected($event)"
+                  />
+                </div>
+                <div class="form-group">
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    placeholder="Comentarios"
+                    [(ngModel)]="activityComments"
+                  ></textarea>
+                </div>
+                <button class="btn btn-primary" (click)="uploadActivity()">
+                  Subir Actividad
+                </button>
+              </div>
 
               <!-- Start Course Feature Box  -->
               <div
