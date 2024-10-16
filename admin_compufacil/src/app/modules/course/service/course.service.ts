@@ -5,188 +5,254 @@ import { AuthService } from '../../auth';
 import { URL_SERVICIOS } from 'src/app/config/config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CourseService {
-
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
-  
-  constructor(
-    private http: HttpClient,
-    public authservice: AuthService,
-  ) {
+
+  constructor(private http: HttpClient, public authservice: AuthService) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false);
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  listCourse(search:any,state:any){
+  listCourse(search: any, state: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let LINK = "?T=";
-    if(search){
-      LINK += "&search="+search;
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let LINK = '?T=';
+    if (search) {
+      LINK += '&search=' + search;
     }
-    if(state){
-      LINK += "&state="+state;
+    if (state) {
+      LINK += '&state=' + state;
     }
-    let URL = URL_SERVICIOS+"/course"+LINK;
-    return this.http.get(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let URL = URL_SERVICIOS + '/course' + LINK;
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  lisConfig(){
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course/config";
+  lisConfig() {
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course/config';
     this.isLoadingSubject.next(true);
-    return this.http.get(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  showCourse(course_id:any){
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course/"+course_id;
+  showCourse(course_id: any) {
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course/' + course_id;
     this.isLoadingSubject.next(true);
-    return this.http.get(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  registerCourses(data:any){
+  registerCourses(data: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course";
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course';
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  uploadVideo(data:any,courses_id:string){
+  uploadVideo(data: any, courses_id: string) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course/upload_video/"+courses_id;
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-  
-  updateCourses(data:any,course_id:string){
-    this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course/"+course_id;
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course/upload_video/' + courses_id;
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  deleteCourses(course_id:any){
+  updateCourses(data: any, course_id: string) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course/"+course_id;
-    return this.http.delete(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course/' + course_id;
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  lisSections(course_id:any){
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-section?course_id="+course_id;
+  deleteCourses(course_id: any) {
     this.isLoadingSubject.next(true);
-    return this.http.get(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course/' + course_id;
+    return this.http
+      .delete(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  registerSection(data:any){
+  lisSections(course_id: any) {
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-section?course_id=' + course_id;
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-section";
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  updateSection(data:any,section_id:string){
+  registerSection(data: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-section/"+section_id;
-    return this.http.put(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-section';
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  deleteSection(section_id:any){
+  updateSection(data: any, section_id: string) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-section/"+section_id;
-    return this.http.delete(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-section/' + section_id;
+    return this.http
+      .put(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-
-  lisClases(course_section_id:any){
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-clases?course_section_id="+course_section_id;
+  deleteSection(section_id: any) {
     this.isLoadingSubject.next(true);
-    return this.http.get(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-section/' + section_id;
+    return this.http
+      .delete(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  registerClase(data:any){
+  lisClases(course_section_id: any) {
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL =
+      URL_SERVICIOS + '/course-clases?course_section_id=' + course_section_id;
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-clases";
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  uploadVideoClase(data:any,course_clase_id:string){
+  registerClase(data: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-clases/upload_video/"+course_clase_id;
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-clases';
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  updateClase(data:any,section_id:string){
+  uploadVideoClase(data: any, course_clase_id: string) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-clases/"+section_id;
-    return this.http.put(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-clases/upload_video/' + course_clase_id;
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  deleteClase(section_id:any){
+  updateClase(data: any, section_id: string) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-clases/"+section_id;
-    return this.http.delete(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-clases/' + section_id;
+    return this.http
+      .put(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  registerClaseFile(data:any){
+  deleteClase(section_id: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-clases-file";
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-clases/' + section_id;
+    return this.http
+      .delete(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  deleteClaseFile(course_clase_file_id:any){
+  registerClaseFile(data: any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    let URL = URL_SERVICIOS+"/course-clases-file/"+course_clase_file_id;
-    return this.http.delete(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-clases-file';
+    return this.http
+      .post(URL, data, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  deleteClaseFile(course_clase_file_id: any) {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/course-clases-file/' + course_clase_file_id;
+    return this.http
+      .delete(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  //!Lógica para ver las actividades de los estudiantes
+  getTaskCourses() {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/tasks/courses';
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  getCourseClasses(courseId: number) {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/tasks/courses/' + courseId + '/classes';
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  getStudentTask(taskId: number) {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authservice.token,
+    });
+    let URL = URL_SERVICIOS + '/tasks/' + taskId;
+    return this.http
+      .get(URL, { headers: headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 }

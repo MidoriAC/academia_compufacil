@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <h3>Clases del Curso</h3>
+    </div>
+  </div>
+
+  <div class="card-body py-4">
+    <table
+      class="table align-middle table-row-dashed fs-6 gy-5"
+      id="kt_table_classes"
+    >
+      <thead>
+        <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+          <th class="min-w-125px">Nombre de la Clase</th>
+          <!-- <th class="min-w-125px">Descripción</th> -->
+          <th class="min-w-125px">Número de Tareas</th>
+          <th class="text-end min-w-100px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 fw-bold">
+        <tr *ngFor="let class of classes">
+          <td>{{ class.name }}</td>
+          <!-- <td>{{ class.description }}</td> -->
+          <td>{{ class.task_count }}</td>
+          <td class="text-end">
+            <a
+              [routerLink]="['/cursos/tareas/detalle', class.id]"
+              class="btn btn-light btn-active-light-primary btn-sm"
+            >
+              Ver Tareas
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-container *ngIf="isLoading | async">
+  <div class="overlay-layer bg-dark bg-opacity-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,58 @@
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <div class="d-flex align-items-center position-relative my-1">
+        <span class="svg-icon svg-icon-1 position-absolute ms-6">
+          <!-- SVG del ícono de búsqueda -->
+        </span>
+        <input
+          type="text"
+          data-kt-user-table-filter="search"
+          class="form-control form-control-solid w-250px ps-14"
+          placeholder="Buscar Curso"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body py-4">
+    <table
+      class="table align-middle table-row-dashed fs-6 gy-5"
+      id="kt_table_users"
+    >
+      <thead>
+        <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+          <th class="min-w-125px">Nombre del Curso</th>
+          <th class="min-w-125px">Tutor</th>
+          <th class="min-w-125px">Número de Clases</th>
+          <th class="min-w-125px">Número de Estudiantes</th>
+          <th class="text-end min-w-100px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 fw-bold">
+        <tr *ngFor="let course of courses">
+          <td>{{ course.title }}</td>
+          <td>{{ course.tutor_name }}</td>
+          <td>{{ course.class_count }}</td>
+          <td>{{ course.student_count }}</td>
+          <td class="text-end">
+            <a
+              [routerLink]="['/cursos/tareas/clases', course.id]"
+              class="btn btn-light btn-active-light-primary btn-sm"
+            >
+              Ver Detalle
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-container *ngIf="isLoading | async">
+  <div class="overlay-layer bg-dark bg-opacity-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+</ng-container>

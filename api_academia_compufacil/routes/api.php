@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\Discount\DiscountController;
 use App\Http\Controllers\CheckoutStoreController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,6 +84,12 @@ Route::group([
 
     //Ruta para el dashboard
     Route::get('/dashboard-stats', [DashboardController::class, 'getDashboardStats']);
+
+    //*Rutas para ver las tareas/actividades del estudiante
+
+    Route::get('/tasks/courses', [TaskController::class, 'getCourses']);
+    Route::get('/tasks/courses/{courseId}/classes', [TaskController::class, 'getCourseClasses']);
+    Route::get('/tasks/{taskId}', [TaskController::class, 'getStudentTask']);
 
 });
 

@@ -19,7 +19,9 @@ import { ClaseAddComponent } from './section/clases/clase-add/clase-add.componen
 import { ClaseEditComponent } from './section/clases/clase-edit/clase-edit.component';
 import { ClaseDeleteComponent } from './section/clases/clase-delete/clase-delete.component';
 import { ClaseFileDeleteComponent } from './section/clases/clase-file-delete/clase-file-delete.component';
-
+import { TaskCoursesComponent } from './task-courses/task-courses.component';
+import { TaskClassesComponent } from './task-classes/task-classes.component';
+import { TaskDetailComponent } from './task-detail/task-detail.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { ClaseFileDeleteComponent } from './section/clases/clase-file-delete/cla
     ClaseAddComponent,
     ClaseEditComponent,
     ClaseDeleteComponent,
-    ClaseFileDeleteComponent
+    ClaseFileDeleteComponent,
+    TaskCoursesComponent,
+    TaskClassesComponent,
+    TaskDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +52,7 @@ import { ClaseFileDeleteComponent } from './section/clases/clase-file-delete/cla
     InlineSVGModule,
     NgbModalModule,
 
-    CKEditorModule
-  ]
+    CKEditorModule,
+  ],
 })
-export class CourseModule { }
+export class CourseModule {}
