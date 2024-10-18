@@ -114,12 +114,13 @@ class AuthController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     protected function respondWithToken($token)
-    {
+    { $user = auth('api')->user();
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
             "user" => [
+                "id" => $user->id,
                 "name" => auth('api')->user()->name,
                 "email" => auth('api')->user()->email,
             ]

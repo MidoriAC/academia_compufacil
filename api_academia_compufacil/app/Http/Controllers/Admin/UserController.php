@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\User\UserGResource;
 use App\Http\Resources\User\UserGCollection;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -61,6 +62,11 @@ class UserController extends Controller
         }
         $user = User::create($request->all());
 
+        if ($request->has('role_id')) {
+            $user->role_id = $request->role_id;
+            $user->save();
+        }
+
         return response()->json(["user" => UserGResource::make($user)]);
     }
 
@@ -108,6 +114,11 @@ class UserController extends Controller
         }
         $user->update($request->all());
 
+        if ($request->has('role_id')) {
+            $user->role_id = $request->role_id;
+            $user->save();
+        }
+
         return response()->json(["user" => UserGResource::make($user)]);
     }
 
@@ -123,4 +134,70 @@ class UserController extends Controller
         $user->delete();
         return response()->json(["message" => 200]);
     }
+
+    //*Funciones para roles
+        public function getRole($role_id)
+    {
+        return DB::table('roles')->where('id', $role_id)->first();
+    }
+
+        public function hasPermission($permission)
+    {
+        // Obtener el rol del usuario
+        $role = DB::table('roles')->where('id', $this->role_id)->first();
+
+        if ($role) {
+            // Obtener los permisos asociados a ese rol
+            $permissions = DB::table('permissions')
+                ->join('role_permissions', 'permissions.id', '=', 'role_permissions.permission_id')
+                ->where('role_permissions.role_id', $role->id)
+                ->pluck('permissions.name');
+
+            // Verificar si el permiso especificado está en la lista
+            return $permissions->contains($permission);
+        }
+
+        return false;
+    }
+
+    public function getUserRole($userId)
+    {
+        $user = User::findOrFail($userId);
+        $role = DB::table('roles')->where('id', $user->role_id)->first();
+        return response()->json($role);
+    }
+
+    // public function getUserPermissions($userId)
+    // {
+    //     $user = User::findOrFail($userId);
+    //     $permissions = DB::table('permissions')
+    //         ->join('role_permissions', 'permissions.id', '=', 'role_permissions.permission_id')
+    //         ->where('role_permissions.role_id', $user->role_id)
+    //         // ->select('permissions.*')
+    //         ->pluck('permissions.name') 
+    //         ->toArray();
+    //     return response()->json($permissions);
+    // }
+//     public function getUserPermissions($userId)
+// {
+//     $user = User::findOrFail($userId);
+//     $permissions = DB::table('permissions')
+//         ->join('role_permission', 'permissions.id', '=', 'role_permission.permission_id')
+//         ->where('role_permission.role_id', $user->role_id)
+//         ->pluck('permissions.name')
+//         ->toArray();
+    
+//     return response()->json($permissions);
+// }
+
+public function getUserPermissions($userId)
+{
+    $user = User::findOrFail($userId);
+    $permissions = DB::table('permissions')
+        ->join('role_permission', 'permissions.id', '=', 'role_permission.permission_id')
+        ->where('role_permission.role_id', $user->role_id)
+        ->pluck('permissions.name')
+        ->toArray();
+    return response()->json($permissions);
+}
 }

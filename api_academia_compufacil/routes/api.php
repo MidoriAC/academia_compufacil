@@ -19,6 +19,8 @@ use App\Http\Controllers\CheckoutStoreController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,11 +50,30 @@ Route::group([
     Route::post('/checkout-with-comprobante', [CheckoutController::class, 'checkoutWithComprobante']);
 
 });
+
+// Route::group(['middleware' => ['auth:api']], function () {
+//     Route::apiResource('roles', RoleController::class);
+//     Route::apiResource('permissions', PermissionController::class);
+// });
+
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
     Route::resource('/users',UserController::class);
     Route::post('/users/{id}',[UserController::class, "update"]);
+
+
+    //*Roles:
+      // Nuevas rutas para roles y permisos de usuarios
+      Route::get('users/{id}/role', [UserController::class, 'getUserRole']);
+      Route::get('users/{id}/permissions', [UserController::class, 'getUserPermissions']);
+      Route::apiResource('roles', RoleController::class);
+        Route::apiResource('permissions', PermissionController::class);
+        Route::put('/roles/{id}', [RoleController::class, 'update']);
+
+
+
+
     // 
     Route::resource('/categorie',CategorieController::class);
     Route::post('/categorie/{id}',[CategorieController::class, "update"]);
