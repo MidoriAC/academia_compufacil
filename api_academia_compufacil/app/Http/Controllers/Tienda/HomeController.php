@@ -114,9 +114,9 @@ class HomeController extends Controller
                 $is_have_course = true;
             }
         }
-        $courses_related_instructor = Course::where("id","<>",$course->id)->where("user_id",$course->user_id)->inRandomOrder()->take(2)->get();
+        $courses_related_instructor = Course::where("id","<>",$course->id)->where("user_id",$course->user_id)->where('state', 2)->inRandomOrder()->take(2)->get();
 
-        $courses_related_categories = Course::where("id","<>",$course->id)->where("categorie_id",$course->categorie_id)->inRandomOrder()->take(3)->get();
+        $courses_related_categories = Course::where("id","<>",$course->id)->where("categorie_id",$course->categorie_id)->where('state', 2)->inRandomOrder()->take(3)->get();
 
         return response()->json([
             "course" => LandingCourseResource::make($course),
