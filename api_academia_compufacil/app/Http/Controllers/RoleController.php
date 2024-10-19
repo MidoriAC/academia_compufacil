@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
@@ -20,73 +21,16 @@ class RoleController extends Controller
         return response()->json($roles);
     }
 
-    // public function store(Request $request)
-    // {
-    //     // Crear un nuevo rol usando consulta directa
-    //     $roleId = DB::table('roles')->insertGetId([
-    //         'name' => $request->input('name'),
-    //         'descripcion' => $request->input('description'),
-    //         'created_at' => now(),
-    //         'updated_at' => now(),
-    //     ]);
-
-    //     // Sincronizar permisos (eliminar y luego insertar los nuevos)
-    //     DB::table('role_permission')->where('role_id', $roleId)->delete();
-
-    //     foreach ($request->input('permissions', []) as $permissionId) {
-    //         DB::table('role_permission')->insert([
-    //             'role_id' => $roleId,
-    //             'permission_id' => $permissionId,
-    //         ]);
-    //     }
-
-    //         $role = DB::table('roles')
-    //         ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.name) as permissions'))
-    //         ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
-    //         ->leftJoin('permissions', 'role_permission.permission_id', '=', 'permissions.id')
-    //         ->where('roles.id', $roleId)
-    //         ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
-    //         ->get();
-
-    //     return response()->json($role);
-    // }
-
-    // public function update(Request $request, $roleId)
-    // {
-    //     // Actualizar el rol usando consulta directa
-    //     DB::table('roles')
-    //         ->where('id', $roleId)
-    //         ->update([
-    //             'name' => $request->input('name'),
-    //             'descripcion' => $request->input('description'),
-    //             'updated_at' => now(),
-    //         ]);
-
-    //     // Sincronizar permisos (eliminar y luego insertar los nuevos)
-    //     DB::table('role_permission')->where('role_id', $roleId)->delete();
-
-    //     foreach ($request->input('permissions', []) as $permissionId) {
-    //         DB::table('role_permission')->insert([
-    //             'role_id' => $roleId,
-    //             'permission_id' => $permissionId,
-    //         ]);
-    //     }
-
-    //     $role = DB::table('roles')
-    // ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.name) as permissions'))
-    // ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
-    // ->leftJoin('permissions', 'role_permission.permission_id', '=', 'permissions.id')
-    // ->where('roles.id', $roleId)
-    // ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
-    // ->get();
-
-    //     return response()->json($role);
-    // }
-
-//     public function store(Request $request)
+// public function store(Request $request)
 // {
-//     \Log::info('Received role data: ' . json_encode($request->all()));  // Para depuración
+//     // Validar la entrada
+//     $request->validate([
+//         'name' => 'required|string|max:255',
+//         'description' => 'nullable|string',
+//         'permissions' => 'required|array', // Asegúrate de que se reciban los permisos como un array
+//     ]);
 
+//     // Crear un nuevo rol
 //     $roleId = DB::table('roles')->insertGetId([
 //         'name' => $request->input('name'),
 //         'descripcion' => $request->input('description'),
@@ -96,8 +40,7 @@ class RoleController extends Controller
 
 //     // Sincronizar permisos
 //     if ($request->has('permissions')) {
-//         $permissions = $request->input('permissions');
-//         foreach ($permissions as $permissionId) {
+//         foreach ($request->input('permissions') as $permissionId) {
 //             DB::table('role_permission')->insert([
 //                 'role_id' => $roleId,
 //                 'permission_id' => $permissionId,
@@ -105,6 +48,7 @@ class RoleController extends Controller
 //         }
 //     }
 
+//     // Obtener el rol creado
 //     $role = DB::table('roles')
 //         ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.name) as permissions'))
 //         ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
@@ -113,162 +57,106 @@ class RoleController extends Controller
 //         ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
 //         ->first();
 
-//     \Log::info('Role created: ' . json_encode($role));  // Para depuración
-
 //     return response()->json($role);
 // }
 
-// public function update(Request $request, $roleId)
-// {
-//     \Log::info('Received role update data: ' . json_encode($request->all()));  // Para depuración
-
-//     DB::table('roles')
-//         ->where('id', $roleId)
-//         ->update([
-//             'name' => $request->input('name'),
-//             'descripcion' => $request->input('description'),
-//             'updated_at' => now(),
-//         ]);
-
-//     // Sincronizar permisos
-//     DB::table('role_permission')->where('role_id', $roleId)->delete();
-//     if ($request->has('permissions')) {
-//         $permissions = $request->input('permissions');
-//         foreach ($permissions as $permissionId) {
-//             DB::table('role_permission')->insert([
-//                 'role_id' => $roleId,
-//                 'permission_id' => $permissionId,
-//             ]);
-//         }
-//     }
-
-//     $role = DB::table('roles')
-//         ->select('roles.*', DB::raw(' GROUP_CONCAT(permissions.name) as permissions'))
-//         ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
-//         ->leftJoin('permissions', 'role_permission.permission_id', '=', 'permissions.id')
-//         ->where('roles.id', $roleId)
-//         ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
-//         ->first();
-
-//     \Log::info('Role updated: ' . json_encode($role));  // Para depuración
-
-//     return response()->json($role);
-// }
 public function store(Request $request)
 {
-    // Validar la entrada
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'permissions' => 'required|array', // Asegúrate de que se reciban los permisos como un array
+        'permissions' => 'required|array|min:1',
+        'permissions.*' => 'exists:permissions,id',
     ]);
 
-    // Crear un nuevo rol
-    $roleId = DB::table('roles')->insertGetId([
-        'name' => $request->input('name'),
-        'descripcion' => $request->input('description'),
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
+    }
 
-    // Sincronizar permisos
-    if ($request->has('permissions')) {
+    DB::beginTransaction();
+
+    try {
+        $roleId = DB::table('roles')->insertGetId([
+            'name' => $request->input('name'),
+            'descripcion' => $request->input('description'),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
         foreach ($request->input('permissions') as $permissionId) {
             DB::table('role_permission')->insert([
                 'role_id' => $roleId,
                 'permission_id' => $permissionId,
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
+
+        DB::commit();
+
+        $role = $this->getRoleWithPermissions($roleId);
+
+        return response()->json($role);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json(['error' => 'Error creating role: ' . $e->getMessage()], 500);
     }
-
-    // Obtener el rol creado
-    $role = DB::table('roles')
-        ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.name) as permissions'))
-        ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
-        ->leftJoin('permissions', 'role_permission.permission_id', '=', 'permissions.id')
-        ->where('roles.id', $roleId)
-        ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
-        ->first();
-
-    return response()->json($role);
 }
+
 public function update(Request $request, $roleId)
 {
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'name' => 'required|string|max:255',
         'description' => 'nullable|string',
-        'permissions' => 'required|array',
+        'permissions' => 'required|array|min:1',
+        'permissions.*' => 'exists:permissions,id',
     ]);
 
-    DB::table('roles')->where('id', $roleId)->update([
-        'name' => $request->input('name'),
-        'descripcion' => $request->input('description'),
-        'updated_at' => now(),
-    ]);
-
-    // Sincronizar permisos
-    DB::table('role_permission')->where('role_id', $roleId)->delete();
-    foreach ($request->input('permissions') as $permissionId) {
-        DB::table('role_permission')->insert([
-            'role_id' => $roleId,
-            'permission_id' => $permissionId,
-        ]);
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 422);
     }
 
-    $role = DB::table('roles')
-        ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.name) as permissions'))
+    DB::beginTransaction();
+
+    try {
+        DB::table('roles')->where('id', $roleId)->update([
+            'name' => $request->input('name'),
+            'descripcion' => $request->input('description'),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('role_permission')->where('role_id', $roleId)->delete();
+
+        foreach ($request->input('permissions') as $permissionId) {
+            DB::table('role_permission')->insert([
+                'role_id' => $roleId,
+                'permission_id' => $permissionId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        DB::commit();
+
+        $role = $this->getRoleWithPermissions($roleId);
+
+        return response()->json($role);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json(['error' => 'Error updating role: ' . $e->getMessage()], 500);
+    }
+}
+
+private function getRoleWithPermissions($roleId)
+{
+    return DB::table('roles')
+        ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.id) as permissions'))
         ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
         ->leftJoin('permissions', 'role_permission.permission_id', '=', 'permissions.id')
         ->where('roles.id', $roleId)
         ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
         ->first();
-
-    return response()->json($role);
 }
-public function update22(Request $request, $roleId)
-{
-    // Validar la entrada
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'permissions' => 'required|array', // Asegúrate de que se reciban los permisos como un array
-    ]);
 
-    // Actualizar el rol
-    DB::table('roles')->where('id', $roleId)->update([
-        'name' => $request->input('name'),
-        'descripcion' => $request->input('description'),
-        'updated_at' => now(),
-    ]);
 
-    // Sincronizar permisos
-    DB::table('role_permission')->where('role_id', $roleId)->delete(); // Eliminar permisos existentes
-    foreach ($request->input('permissions') as $permissionId) {
-        DB::table('role_permission')->insert([
-            'role_id' => $roleId,
-            'permission_id' => $permissionId,
-        ]);
-    }
-
-    // Obtener el rol actualizado
-    $role = DB::table('roles')
-        ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.name) as permissions'))
-        ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
-        ->leftJoin('permissions', 'role_permission.permission_id', '=', ' permissions.id')
-        ->where('roles.id', $roleId)
-        ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
-        ->first();
-
-    return response()->json($role);
-}
-    public function destroy($roleId)
-    {
-        // Eliminar los permisos asociados al rol
-        DB::table('role_permission')->where('role_id', $roleId)->delete();
-
-        // Eliminar el rol
-        DB::table('roles')->where('id', $roleId)->delete();
-
-        return response()->json(['message' => 'Role deleted successfully']);
-    }
 }

@@ -15,18 +15,18 @@ import { RoleModalComponent } from './role-modal.component';
           </button>
         </div>
       </div>
-      <div class="card-body" *ngIf="roles.length > 0; else noRoles">
+      <div class="card-body py-4" *ngIf="roles.length > 0; else noRoles">
         <div class="card-body">
           <table class="table">
             <thead>
-              <tr>
+              <tr class="table align-middle table-row-dashed fs-6 gy-5">
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Permisos</th>
                 <th>Acciones</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="text-gray-600 fw-bold">
               <tr *ngFor="let role of roles">
                 <td>{{ role.name }}</td>
                 <td>

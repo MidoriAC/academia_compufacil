@@ -18,12 +18,14 @@ export class RoleService {
   }
 
   createRole(roleData: any): Observable<any> {
-    return this.http.post(`${URL_SERVICIOS}/roles`, roleData);
+    return this.http.post(`${URL_SERVICIOS}/roles`, roleData).pipe(
+      catchError((error) => {
+        console.error('Error creating role:', error);
+        return throwError('Error creating role. Please try again.');
+      })
+    );
   }
 
-  // updateRole(roleId: number, roleData: any): Observable<any> {
-  //   return this.http.put(`${URL_SERVICIOS}/roles/${roleId}`, roleData);
-  // }
   updateRole(roleId: number, roleData: any): Observable<any> {
     return this.http.put(`${URL_SERVICIOS}/roles/${roleId}`, roleData).pipe(
       catchError((error) => {

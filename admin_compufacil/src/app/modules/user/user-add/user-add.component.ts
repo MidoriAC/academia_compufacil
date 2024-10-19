@@ -17,6 +17,7 @@ export class UserAddComponent implements OnInit {
   password: any = null;
   confirmation_password: any = null;
   role_id: any = null;
+  roles: any[] = [];
 
   IMAGEN_PREVISUALIZA: any = './assets/media/avatars/300-6.jpg';
   FILE_AVATAR: any = null;
@@ -30,6 +31,12 @@ export class UserAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = this.userService.isLoading$;
+    this.loadRoles();
+  }
+  loadRoles() {
+    this.userService.getRoles().subscribe((resp: any) => {
+      this.roles = resp;
+    });
   }
 
   processAvatar($event: any) {

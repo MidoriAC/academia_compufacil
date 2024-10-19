@@ -26,6 +26,7 @@
   class="menu-item menu-accordion"
   data-kt-menu-trigger="click"
   routerLinkActive="here show"
+  *ngIf="userPermissions.view_users"
 >
   <span class="menu-link"
     ><span class="menu-icon"
@@ -112,6 +113,11 @@
   class="menu-item menu-accordion"
   data-kt-menu-trigger="click"
   routerLinkActive="here show"
+  *ngIf="
+    userPermissions.create_course ||
+    userPermissions.view_users ||
+    userPermissions.tasks_students
+  "
 >
   <span class="menu-link"
     ><span class="menu-icon"
@@ -247,7 +253,9 @@
     class="menu-item menu-accordion"
     data-kt-menu-trigger="click"
     routerLinkActive="here show"
-    *ngIf="userPermissions.activation_courses"
+    *ngIf="
+      userPermissions.activation_courses || userPermissions.upload_certificate
+    "
   >
     <span class="menu-link"
       ><span class="menu-icon"
@@ -262,10 +270,25 @@
         <a
           class="menu-link without-sub"
           routerLinkActive="active"
+          *ngIf="userPermissions.activation_courses"
           routerLink="/sales/list"
           ><span class="menu-bullet"
             ><span class="bullet bullet-dot"></span></span
           ><span class="menu-title">Cursos por activación a estudiante</span></a
+        >
+      </div>
+    </div>
+    <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+      <div class="menu-item">
+        <a
+          upload_certificate
+          class="menu-link without-sub"
+          routerLinkActive="active"
+          *ngIf="userPermissions.upload_certificate"
+          routerLink="/certificate/list"
+          ><span class="menu-bullet"
+            ><span class="bullet bullet-dot"></span></span
+          ><span class="menu-title">Cargar certificados</span></a
         >
       </div>
     </div>

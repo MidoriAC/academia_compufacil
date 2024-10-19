@@ -21,6 +21,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\CertificateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,14 @@ Route::group([
       Route::apiResource('roles', RoleController::class);
         Route::apiResource('permissions', PermissionController::class);
         Route::put('/roles/{id}', [RoleController::class, 'update']);
+
+        //*Obtener roles dinamicamente
+        Route::get('/roles', [UserController::class, 'getRoles']);
+
+    //*Certificados
+    Route::get('/students-certificates', [CertificateController::class, 'index']);
+    Route::post('/certificates', [CertificateController::class, 'store']);
+    Route::post('/certificates/{id}', [CertificateController::class, 'update']);
 
 
 

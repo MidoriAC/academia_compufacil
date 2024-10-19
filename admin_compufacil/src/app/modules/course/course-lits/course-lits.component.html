@@ -135,8 +135,8 @@
           <th class="min-w-125px">Imagen</th>
           <th class="min-w-125px">Titulo</th>
           <th class="min-w-125px">Categoria</th>
-          <th class="min-w-125px">Precio en DESC</th>
-          <th class="min-w-125px">Precio en GTQ</th>
+          <th class="min-w-125px">Precio GTQ</th>
+          <th class="min-w-125px">Precio Descuento</th>
           <th class="min-w-125px">Nivel</th>
           <th class="min-w-125px">Idioma</th>
           <th class="min-w-125px">Status</th>
@@ -154,7 +154,7 @@
               <div
                 class="symbol symbol-circle symbol-50px overflow-hidden me-3"
               >
-                <a href="#">
+                <a>
                   <div class="symbol-label">
                     <img [src]="COURSE.imagen" alt="Imagen" class="w-100" />
                   </div>
@@ -164,7 +164,6 @@
 
             <td class="">
               <a
-                href="#"
                 onclick="return false;"
                 class="text-gray-800 text-hover-primary mb-1"
                 >{{ COURSE.title }}</a
@@ -173,7 +172,6 @@
 
             <td>
               <a
-                href="#"
                 onclick="return false;"
                 class="text-gray-800 text-hover-primary mb-1"
                 >{{ COURSE.categorie.name }}</a
@@ -182,7 +180,6 @@
 
             <td>
               <a
-                href="#"
                 onclick="return false;"
                 class="text-gray-800 text-hover-primary mb-1"
                 >{{ COURSE.precio_desc }} DESC
@@ -191,7 +188,6 @@
 
             <td>
               <a
-                href="#"
                 onclick="return false;"
                 class="text-gray-800 text-hover-primary mb-1"
                 >{{ COURSE.precio_gtq }} GTQ</a
@@ -200,7 +196,6 @@
 
             <td>
               <a
-                href="#"
                 onclick="return false;"
                 class="text-gray-800 text-hover-primary mb-1"
                 >{{ COURSE.level }}
@@ -209,7 +204,6 @@
 
             <td>
               <a
-                href="#"
                 onclick="return false;"
                 class="text-gray-800 text-hover-primary mb-1"
                 >{{ COURSE.idioma }}

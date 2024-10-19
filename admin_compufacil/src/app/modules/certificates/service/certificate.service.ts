@@ -7,7 +7,7 @@ import { URL_SERVICIOS } from 'src/app/config/config';
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class CertificateService {
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
 
@@ -16,65 +16,46 @@ export class UserService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  listUsers(search: any, state: any) {
+  getStudentsWithCertificates() {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authservice.token,
     });
-    let LINK = '?T=';
-    if (search) {
-      LINK += '&search=' + search;
-    }
-    if (state) {
-      LINK += '&state=' + state;
-    }
-    let URL = URL_SERVICIOS + '/users' + LINK;
+    let URL = URL_SERVICIOS + '/students-certificates';
     return this.http
       .get(URL, { headers: headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  register(data: any) {
+  uploadCertificate(userId: number, courseId: number, file: File) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authservice.token,
     });
-    let URL = URL_SERVICIOS + '/users';
+    let URL = URL_SERVICIOS + '/certificates';
+
+    const formData = new FormData();
+    formData.append('user_id', userId.toString());
+    formData.append('course_id', courseId.toString());
+    formData.append('certificate', file);
+
     return this.http
-      .post(URL, data, { headers: headers })
+      .post(URL, formData, { headers: headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  update(data: any, user_id: string) {
+  updateCertificate(certificateId: number, file: File) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authservice.token,
     });
-    let URL = URL_SERVICIOS + '/users/' + user_id;
-    return this.http
-      .post(URL, data, { headers: headers })
-      .pipe(finalize(() => this.isLoadingSubject.next(false)));
-  }
+    let URL = URL_SERVICIOS + '/certificates/' + certificateId;
 
-  deleteUser(user_id: string) {
-    this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({
-      Authorization: 'Bearer ' + this.authservice.token,
-    });
-    let URL = URL_SERVICIOS + '/users/' + user_id;
-    return this.http
-      .delete(URL, { headers: headers })
-      .pipe(finalize(() => this.isLoadingSubject.next(false)));
-  }
+    const formData = new FormData();
+    formData.append('certificate', file);
 
-  getRoles() {
-    this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({
-      Authorization: 'Bearer ' + this.authservice.token,
-    });
-    let URL = URL_SERVICIOS + '/roles';
     return this.http
-      .get(URL, { headers: headers })
+      .post(URL, formData, { headers: headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 }

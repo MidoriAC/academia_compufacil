@@ -38,6 +38,7 @@ export class AsideMenuComponent implements OnInit, OnDestroy {
       'discount',
       'discount_list',
       'activation_courses',
+      'upload_certificate',
     ];
     permissionsToCheck.forEach((permission) => {
       this.userPermissions[permission] = permissions.includes(permission);

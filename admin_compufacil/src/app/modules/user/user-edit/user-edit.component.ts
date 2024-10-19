@@ -23,6 +23,7 @@ export class UserEditComponent implements OnInit {
   profesion: any = null;
   description: any = null;
   role_id: any = null;
+  roles: any[] = [];
 
   IMAGEN_PREVISUALIZA: any = './assets/media/avatars/300-6.jpg';
   FILE_AVATAR: any = null;
@@ -36,6 +37,7 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = this.userService.isLoading$;
+    this.loadRoles();
     this.name = this.user.name;
     this.surname = this.user.surname;
     this.email = this.user.email;
@@ -45,6 +47,12 @@ export class UserEditComponent implements OnInit {
     this.profesion = this.user.profesion;
     this.description = this.user.description;
     this.role_id = this.user.role_id;
+  }
+
+  loadRoles() {
+    this.userService.getRoles().subscribe((resp: any) => {
+      this.roles = resp;
+    });
   }
 
   processAvatar($event: any) {

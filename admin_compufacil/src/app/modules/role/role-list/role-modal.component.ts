@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { RoleService } from '../service/role.service';
 
 @Component({
@@ -36,15 +36,19 @@ import { RoleService } from '../service/role.service';
             formControlName="description"
           ></textarea>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label>Permisos</label>
-          <div *ngFor="let permission of permissions">
+          <div *ngFor="let permission of permissions; let i = index">
             <label>
-              <input
-                type="checkbox"
-                [value]="permission.id"
-                (change)="onPermissionChange($event)"
-              />
+              <input type="checkbox" [formControlName]="i" />
+              {{ permission.name }}
+            </label>
+          </div>
+        </div> -->
+        <div formArrayName="permissions">
+          <div *ngFor="let permission of permissions; let i = index">
+            <label>
+              <input type="checkbox" [formControlName]="i" />
               {{ permission.name }}
             </label>
           </div>
@@ -70,71 +74,6 @@ import { RoleService } from '../service/role.service';
     </div>
   `,
 })
-// export class RoleModalComponent implements OnInit {
-//   @Input() role: any;
-//   @Input() permissions: any[];
-
-//   roleForm: FormGroup;
-//   selectedPermissions: number[] = [];
-
-//   constructor(
-//     public activeModal: NgbActiveModal,
-//     private formBuilder: FormBuilder,
-//     private roleService: RoleService
-//   ) {}
-
-//   ngOnInit() {
-//     this.roleForm = this.formBuilder.group({
-//       name: [this.role.name || '', Validators.required],
-//       description: [this.role.description || ''],
-//     });
-
-//     if (this.role.permissions) {
-//       this.selectedPermissions = this.role.permissions.split(',').map(Number);
-//     }
-//   }
-
-//   onPermissionChange(event: any) {
-//     const permissionId = Number(event.target.value);
-//     if (event.target.checked) {
-//       this.selectedPermissions.push(permissionId);
-//     } else {
-//       const index = this.selectedPermissions.indexOf(permissionId);
-//       if (index > -1) {
-//         this.selectedPermissions.splice(index, 1);
-//       }
-//     }
-//   }
-
-//   saveRole() {
-//     if (this.roleForm.valid) {
-//       const roleData = {
-//         ...this.roleForm.value,
-//         permissions: this.selectedPermissions,
-//       };
-
-//       if (this.role.id) {
-//         this.roleService.updateRole(this.role.id, roleData).subscribe(
-//           (response) => {
-//             this.activeModal.close(response);
-//           },
-//           (error) => {
-//             console.error('Error updating role', error);
-//           }
-//         );
-//       } else {
-//         this.roleService.createRole(roleData).subscribe(
-//           (response) => {
-//             this.activeModal.close(response);
-//           },
-//           (error) => {
-//             console.error('Error creating role', error);
-//           }
-//         );
-//       }
-//     }
-//   }
-// }
 export class RoleModalComponent implements OnInit {
   @Input() role: any;
   permissions: any[] = [];
@@ -147,23 +86,14 @@ export class RoleModalComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.roleForm = this.formBuilder.group({
-      name: [this.role.name || '', Validators.required],
-      description: [this.role.description || ''],
-    });
-
     this.loadPermissions();
   }
 
   loadPermissions() {
     this.roleService.getPermissions().subscribe(
       (data: any) => {
-        this.permissions = data.map((permission: any) => ({
-          ...permission,
-          checked: this.role.permissions
-            ? this.role.permissions.includes(permission.name)
-            : false,
-        }));
+        this.permissions = data;
+        this.initForm();
       },
       (error) => {
         console.error('Error loading permissions', error);
@@ -171,45 +101,35 @@ export class RoleModalComponent implements OnInit {
     );
   }
 
-  onPermissionChange(permission: any) {
-    permission.checked = !permission.checked;
+  initForm() {
+    this.roleForm = this.formBuilder.group({
+      name: [this.role.name || '', Validators.required],
+      description: [this.role.descripcion || ''],
+      permissions: this.formBuilder.array([]),
+    });
+
+    this.permissions.forEach((permission) => {
+      const control = this.formBuilder.control(
+        this.role.permissions
+          ? this.role.permissions.includes(permission.id)
+          : false
+      );
+      (this.roleForm.get('permissions') as FormArray).push(control);
+    });
   }
 
-  //   saveRole() {
-  //     if (this.roleForm.valid) {
-  //       const roleData = {
-  //         ...this.roleForm.value,
-  //         permissions: this.permissions
-  //           .filter((p) => p.checked)
-  //           .map((p) => p.name),
-  //       };
-
-  //       if (this.role.id) {
-  //         this.roleService.updateRole(this.role.id, roleData).subscribe(
-  //           (response) => {
-  //             this.activeModal.close(response);
-  //           },
-  //           (error) => {
-  //             console.error('Error updating role', error);
-  //           }
-  //         );
-  //       } else {
-  //         this.roleService.createRole(roleData).subscribe(
-  //           (response) => {
-  //             this.activeModal.close(response);
-  //           },
-  //           (error) => {
-  //             console.error('Error creating role', error);
-  //           }
-  //         );
-  //       }
-  //     }
-  //   }
   saveRole() {
     if (this.roleForm.valid) {
+      const selectedPermissions = this.roleForm.value.permissions
+        .map((checked: boolean, i: number) =>
+          checked ? this.permissions[i].id : null
+        )
+        .filter((id: number | null) => id !== null);
+
       const roleData = {
-        ...this.roleForm.value,
-        permissions: this.permissions.filter((p) => p.checked).map((p) => p.id),
+        name: this.roleForm.value.name,
+        description: this.roleForm.value.description,
+        permissions: selectedPermissions,
       };
 
       console.log('Sending role data:', roleData); // Para depuración

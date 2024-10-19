@@ -200,4 +200,10 @@ public function getUserPermissions($userId)
         ->toArray();
     return response()->json($permissions);
 }
+
+    public function getRoles()
+    {
+        $roles = DB::table('roles')->get();
+        return response()->json($roles);
+    }
 }
