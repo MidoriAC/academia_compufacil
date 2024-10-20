@@ -10,6 +10,7 @@ use App\Models\Sale\SaleDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Ecommerce\Sale\SaleCollection;
 use App\Http\Resources\Ecommerce\Course\CourseHomeResource;
 
@@ -24,7 +25,28 @@ class ProfileClientController extends Controller
         $active_course_count = CoursesStudent::where("user_id",$user->id)->where("clases_checkeds","<>",NULL)->count();
         $termined_course_count = CoursesStudent::where("user_id",$user->id)->where("state",2)->count();
 
-        $enrolled_courses = CoursesStudent::where("user_id",$user->id)->where('state', '!=', 0 )->get();
+        // $enrolled_courses = CoursesStudent::where("user_id",$user->id)->where('state', '!=', 0 )->get();
+
+        //*
+
+        $enrolled_courses = CoursesStudent::where("user_id", $user->id)->where('state', '!=', 0)->get();
+
+        $enrolled_courses = $enrolled_courses->map(function($course_student) {
+            $clases_checkeds = $course_student->clases_checkeds ? explode(",", $course_student->clases_checkeds) : [];
+            $certificate = DB::table('certificates')
+                             ->where('user_id', $course_student->user_id)
+                             ->where('course_id', $course_student->course_id)
+                             ->first();
+            return [
+                "id" => $course_student->id,
+                "clases_checkeds" => $clases_checkeds,
+                "percentage" => round((sizeof($clases_checkeds) / $course_student->course->count_class) * 100, 2),
+                "course" => CourseHomeResource::make($course_student->course),
+                "has_certificate" => $certificate ? true : false,
+            ];
+        });
+
+        //*
         $active_courses = CoursesStudent::where("user_id",$user->id)->where("clases_checkeds","<>",NULL)->get();
         $termined_courses = CoursesStudent::where("user_id",$user->id)->where("state",2)->get();
 
@@ -46,15 +68,7 @@ class ProfileClientController extends Controller
             "enrolled_course_count" => $enrolled_course_count,
             "active_course_count" => $active_course_count,
             "termined_course_count" => $termined_course_count,
-            "enrolled_courses" => $enrolled_courses->map(function($course_student){
-                $clases_checkeds = $course_student->clases_checkeds ? explode(",",$course_student->clases_checkeds) : [];
-                return [
-                    "id" => $course_student->id,
-                    "clases_checkeds" => $clases_checkeds,
-                    "percentage" => round((sizeof($clases_checkeds)/$course_student->course->count_class)*100,2),
-                    "course" => CourseHomeResource::make($course_student->course),
-                ];
-            }),
+            "enrolled_courses" => $enrolled_courses,
             "active_courses" => $active_courses->map(function($course_student){
                 $clases_checkeds = $course_student->clases_checkeds ? explode(",",$course_student->clases_checkeds) : [];
                 return [

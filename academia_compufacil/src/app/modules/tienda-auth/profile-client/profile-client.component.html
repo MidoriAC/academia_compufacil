@@ -333,8 +333,8 @@
                                   >
                                     Proceso
                                   </h6>
-                                  <div class="progress">
-                                    <div
+                                  <!-- <div class="progress"> -->
+                                  <!-- <div
                                       class="progress-bar wow fadeInLeft bar-color-success"
                                       data-wow-duration="0.5s"
                                       data-wow-delay=".3s"
@@ -351,16 +351,29 @@
                                     <span
                                       class="rbt-title-style-2 progress-number"
                                       >{{ enrolled_course.percentage }}%</span
-                                    >
-                                  </div>
+                                    > -->
+                                  <!-- </div> -->
+                                  <br />
                                 </div>
                               </div>
                               <div class="rbt-card-bottom">
                                 <a
                                   class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                                  href="#"
-                                  >Download Certificate</a
+                                  (click)="
+                                    downloadCertificate(
+                                      enrolled_course.course.id
+                                    )
+                                  "
+                                  *ngIf="enrolled_course.has_certificate"
                                 >
+                                  Descargar Certificado
+                                </a>
+                                <span
+                                  class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                  *ngIf="!enrolled_course.has_certificate"
+                                >
+                                  Certificado no disponible
+                                </span>
                               </div>
                             </div>
                           </div>
@@ -455,7 +468,7 @@
                                   >
                                     Proceso
                                   </h6>
-                                  <div class="progress">
+                                  <!-- <div class="progress">
                                     <div
                                       class="progress-bar wow fadeInLeft bar-color-success"
                                       data-wow-duration="0.5s"
@@ -474,16 +487,29 @@
                                       class="rbt-title-style-2 progress-number"
                                       >{{ enrolled_course.percentage }}%</span
                                     >
-                                  </div>
+                                  </div> -->
                                 </div>
                               </div>
                               <div class="rbt-card-bottom">
                                 <a
                                   class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                                  href="#"
-                                  >Download Certificate</a
+                                  (click)="
+                                    downloadCertificate(
+                                      enrolled_course.course.id
+                                    )
+                                  "
+                                  *ngIf="enrolled_course.has_certificate"
                                 >
+                                  Descargar Certificado
+                                </a>
+                                <span
+                                  class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                  *ngIf="!enrolled_course.has_certificate"
+                                >
+                                  Certificado no disponible
+                                </span>
                               </div>
+                              <br />
                             </div>
                           </div>
                         </div>
@@ -577,7 +603,7 @@
                                   >
                                     Proceso
                                   </h6>
-                                  <div class="progress">
+                                  <!-- <div class="progress">
                                     <div
                                       class="progress-bar wow fadeInLeft bar-color-success"
                                       data-wow-duration="0.5s"
@@ -596,15 +622,28 @@
                                       class="rbt-title-style-2 progress-number"
                                       >{{ enrolled_course.percentage }}%</span
                                     >
-                                  </div>
+                                  </div> -->
+                                  <br />
                                 </div>
                               </div>
                               <div class="rbt-card-bottom">
                                 <a
                                   class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                                  href="#"
-                                  >Download Certificate</a
+                                  (click)="
+                                    downloadCertificate(
+                                      enrolled_course.course.id
+                                    )
+                                  "
+                                  *ngIf="enrolled_course.has_certificate"
                                 >
+                                  Descargar Certificado
+                                </a>
+                                <span
+                                  class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                  *ngIf="!enrolled_course.has_certificate"
+                                >
+                                  Certificado no disponible
+                                </span>
                               </div>
                             </div>
                           </div>

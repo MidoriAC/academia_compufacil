@@ -123,6 +123,8 @@ Route::group([
 
 });
 
+
+//*Rutas para el lado de la app del estudiante
 Route::group(["prefix" => "ecommerce"],function($router){
     Route::get("home",[HomeController::class,"home"]);
     Route::get("config_all",[HomeController::class,"config_all"]);
@@ -146,5 +148,9 @@ Route::group(["prefix" => "ecommerce"],function($router){
 
         //* Subir tareas
         Route::post('/upload_activity', [HomeController::class, 'uploadActivity']);
+
+        //* Descargar certificado
+        // Route::get('/download_certificate/{courseId}', [CertificateController::class, 'download']);
+        Route::get('/download_certificate/{userId}/{courseId}', [CertificateController::class, 'download']);
     });
 });

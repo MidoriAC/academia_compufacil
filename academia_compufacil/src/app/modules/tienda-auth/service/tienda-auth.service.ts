@@ -57,4 +57,18 @@ export class TiendaAuthService {
     let URL = URL_SERVICIOS + '/ecommerce/upload_activity';
     return this.http.post(URL, formData, { headers: headers });
   }
+
+  //*Descargar certificado
+  downloadCertificate(userId: number, courseId: number) {
+    let URL =
+      URL_SERVICIOS +
+      '/ecommerce/download_certificate/' +
+      userId +
+      '/' +
+      courseId;
+    return this.http.get(URL, {
+      responseType: 'blob',
+      observe: 'response',
+    });
+  }
 }

@@ -91,4 +91,28 @@ class CertificateController extends Controller
 
         return response()->json(['message' => 'Certificate updated successfully']);
     }
+
+
+    public function download($userId, $courseId)
+{
+    try {
+        $certificate = DB::table('certificates')
+            ->where('user_id', $userId)
+            ->where('course_id', $courseId)
+            ->first();
+
+        if (!$certificate) {
+            return response()->json(['message' => 'Certificado no encontrado'], 404);
+        }
+
+        $filePath = storage_path('app/public/' . $certificate->file_path);
+        if (!file_exists($filePath)) {
+            return response()->json(['message' => 'Archivo del certificado no encontrado'], 404);
+        }
+
+        return response()->download($filePath);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error interno del servidor: ' . $e->getMessage()], 500);
+    }
+}
 }
