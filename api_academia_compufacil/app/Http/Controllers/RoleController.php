@@ -21,45 +21,6 @@ class RoleController extends Controller
         return response()->json($roles);
     }
 
-// public function store(Request $request)
-// {
-//     // Validar la entrada
-//     $request->validate([
-//         'name' => 'required|string|max:255',
-//         'description' => 'nullable|string',
-//         'permissions' => 'required|array', // Asegúrate de que se reciban los permisos como un array
-//     ]);
-
-//     // Crear un nuevo rol
-//     $roleId = DB::table('roles')->insertGetId([
-//         'name' => $request->input('name'),
-//         'descripcion' => $request->input('description'),
-//         'created_at' => now(),
-//         'updated_at' => now(),
-//     ]);
-
-//     // Sincronizar permisos
-//     if ($request->has('permissions')) {
-//         foreach ($request->input('permissions') as $permissionId) {
-//             DB::table('role_permission')->insert([
-//                 'role_id' => $roleId,
-//                 'permission_id' => $permissionId,
-//             ]);
-//         }
-//     }
-
-//     // Obtener el rol creado
-//     $role = DB::table('roles')
-//         ->select('roles.*', DB::raw('GROUP_CONCAT(permissions.name) as permissions'))
-//         ->leftJoin('role_permission', 'roles.id', '=', 'role_permission.role_id')
-//         ->leftJoin('permissions', 'role_permission.permission_id', '=', 'permissions.id')
-//         ->where('roles.id', $roleId)
-//         ->groupBy('roles.id', 'roles.name', 'roles.descripcion', 'roles.created_at', 'roles.updated_at')
-//         ->first();
-
-//     return response()->json($role);
-// }
-
 public function store(Request $request)
 {
     $validator = Validator::make($request->all(), [

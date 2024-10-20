@@ -55,8 +55,8 @@ function getChartOptions(
   return {
     series: [
       {
-        name: 'Net Profit',
-        data: [30, 45, 32, 70, 40, 40, 40],
+        name: '',
+        data: [],
       },
     ],
     chart: {

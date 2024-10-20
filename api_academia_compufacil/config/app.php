@@ -174,7 +174,13 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Vimeo\Laravel\VimeoServiceProvider::class
+        Vimeo\Laravel\VimeoServiceProvider::class,
+
+        // * PARA REPORTES
+        // Maatwebsite\Excel\ExcelServiceProvider::class,
+        // Maatwebsite\Excel\ExcelServiceProvider::class,
+        // Barryvdh\DomPDF\ServiceProvider::class,
+        // Maatwebsite\Excel\ExcelServiceProvider::class,
     ],
 
     /*
@@ -228,7 +234,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Vimeo' => Vimeo\Laravel\Facades\Vimeo::class
+        'Vimeo' => Vimeo\Laravel\Facades\Vimeo::class,
+        // 'PDF' => Barryvdh\DomPDF\Facade::class,
+        // 'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

@@ -17,6 +17,7 @@ import { FakeAPIService } from './_fake/fake-api.service';
 import { CKEditorModule } from 'ckeditor4-angular';
 
 import { ToastNotificationsModule } from 'ngx-toast-notifications';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -30,6 +31,7 @@ function appInitializer(authService: AuthService) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    NgApexchartsModule,
     BrowserModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot(),
@@ -49,7 +51,11 @@ function appInitializer(authService: AuthService) {
     //
     CKEditorModule,
     //
-    ToastNotificationsModule.forRoot({duration: 6000, type: 'primary',position: 'top-right'}),
+    ToastNotificationsModule.forRoot({
+      duration: 6000,
+      type: 'primary',
+      position: 'top-right',
+    }),
   ],
   providers: [
     {

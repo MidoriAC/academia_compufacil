@@ -66,6 +66,11 @@ const Routing: Routes = [
       import('../modules/sales/sales.module').then((m) => m.SalesModule),
   },
   {
+    path: 'reports',
+    loadChildren: () =>
+      import('../modules/reports/reports.module').then((m) => m.RerportsModule),
+  },
+  {
     path: 'certificate',
     loadChildren: () =>
       import('../modules/certificates/certificates.module').then(

@@ -1,0 +1,64 @@
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <h3 class="card-label">Estadísticas de Estudiantes</h3>
+    </div>
+    <div class="card-toolbar">
+      <div class="d-flex align-items-center">
+        <input
+          type="date"
+          [(ngModel)]="filters.startDate"
+          class="form-control form-control-solid me-2"
+          placeholder="Fecha inicio"
+        />
+        <input
+          type="date"
+          [(ngModel)]="filters.endDate"
+          class="form-control form-control-solid me-2"
+          placeholder="Fecha fin"
+        />
+        <button class="btn btn-primary" (click)="getStatistics()">
+          Filtrar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-4">
+    <table
+      class="table align-middle table-row-dashed fs-6 gy-5"
+      id="kt_table_student_statistics"
+    >
+      <thead>
+        <tr class="text-start text-muted fw-bolder fs-7 text- uppercase gs-0">
+          <th class="min-w-125px">ID</th>
+          <th class="min-w-125px">Nombre</th>
+          <th class="min-w-125px">Email</th>
+          <th class="min-w-125px">Total de Cursos</th>
+          <!-- <th class="min-w-125px">Progreso Promedio</th> -->
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 fw-bold">
+        <tr *ngFor="let stat of statistics">
+          <td>{{ stat.id }}</td>
+          <td>{{ stat.name }}</td>
+          <td>{{ stat.email }}</td>
+          <td>{{ stat.total_courses }}</td>
+          <!-- <td>{{ stat.average_progress | number : "1.2-2" }}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary me-2" (click)="downloadReport('pdf')">
+      Descargar PDF
+    </button>
+    <!-- <button class="btn btn-primary" (click)="downloadReport('excel')">
+      Descargar Excel
+    </button> -->
+  </div>
+</div>
+
+<span
+  class="spinner-border spinner-border-sm align-middle ms-2"
+  *ngIf="isLoading$ | async"
+></span>

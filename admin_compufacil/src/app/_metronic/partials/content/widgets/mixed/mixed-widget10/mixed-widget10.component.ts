@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { getCSSVariableValue } from '../../../../../kt/_utils';
+import { DashboardService } from '../../dashboard.service';
+
 @Component({
   selector: 'app-mixed-widget10',
   templateUrl: './mixed-widget10.component.html',
@@ -8,15 +10,50 @@ export class MixedWidget10Component implements OnInit {
   @Input() chartColor: string = '';
   @Input() chartHeight: string;
   chartOptions: any = {};
+  monthlySales: any = [];
+  totalRevenue: number = 0;
 
-  constructor() {}
+  constructor(
+    private dashboardService: DashboardService,
+    private cdr: ChangeDetectorRef
+  ) {}
+  downloadMonthlySalesReport() {
+    this.dashboardService.downloadMonthlySalesReport().subscribe(
+      (data: Blob) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'reporte_ventas_mensuales.pdf';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al descargar el reporte:', error);
+      }
+    );
+  }
 
   ngOnInit(): void {
-    this.chartOptions = getChartOptions(this.chartHeight, this.chartColor);
+    this.dashboardService.getDashboardStats().subscribe((response: any) => {
+      this.monthlySales = response.monthly_sales;
+      this.totalRevenue = response.total_revenue;
+      this.chartOptions = getChartOptions(
+        this.chartHeight,
+        this.chartColor,
+        this.monthlySales
+      );
+
+      this.cdr.detectChanges();
+    });
   }
 }
 
-function getChartOptions(chartHeight: string, chartColor: string) {
+function getChartOptions(
+  chartHeight: string,
+  chartColor: string,
+  monthlySales: any
+) {
   const labelColor = getCSSVariableValue('--bs-gray-800');
   const strokeColor = getCSSVariableValue('--bs-gray-300');
   const baseColor = getCSSVariableValue('--bs-' + chartColor);
@@ -25,8 +62,8 @@ function getChartOptions(chartHeight: string, chartColor: string) {
   return {
     series: [
       {
-        name: 'Net Profit',
-        data: [15, 25, 15, 40, 20, 50],
+        name: 'Ventas mensuales',
+        data: monthlySales.map((sale: any) => sale.y),
       },
     ],
     chart: {
@@ -61,7 +98,7 @@ function getChartOptions(chartHeight: string, chartColor: string) {
       colors: [baseColor],
     },
     xaxis: {
-      categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+      categories: monthlySales.map((sale: any) => sale.x),
       axisBorder: {
         show: false,
       },
@@ -126,7 +163,7 @@ function getChartOptions(chartHeight: string, chartColor: string) {
       },
       y: {
         formatter: function (val: number) {
-          return '$' + val + ' thousands';
+          return 'Q' + val.toFixed(2);
         },
       },
     },

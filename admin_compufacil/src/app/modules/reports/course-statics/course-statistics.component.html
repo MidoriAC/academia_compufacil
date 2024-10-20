@@ -1,0 +1,68 @@
+<div class="card">
+  <div class="card-header border-0 pt-6">
+    <div class="card-title">
+      <h3 class="card-label">Estadísticas de Cursos</h3>
+    </div>
+    <div class="card-toolbar">
+      <div class="d-flex align-items-center">
+        <input
+          type="date"
+          [(ngModel)]="filters.startDate"
+          class="form-control form-control-solid me-2"
+          placeholder="Fecha inicio"
+        />
+        <input
+          type="date"
+          [(ngModel)]="filters.endDate"
+          class="form-control form-control-solid me-2"
+          placeholder="Fecha fin"
+        />
+        <input
+          type="number"
+          [(ngModel)]="filters.categoryId"
+          class="form-control form-control-solid me-2"
+          placeholder="ID Categoría"
+        />
+        <button class="btn btn-primary" (click)="getStatistics()">
+          Filtrar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body py-4">
+    <table
+      class="table align-middle table-row-dashed fs-6 gy-5"
+      id="kt_table_course_statistics"
+    >
+      <thead>
+        <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
+          <th class="min-w-125px">ID</th>
+          <th class="min-w-125px">Título del Curso</th>
+          <th class="min-w-125px">Total de Estudiantes</th>
+          <!-- <th class="min-w-125px">Calificación Promedio</th> -->
+        </tr>
+      </thead>
+      <tbody class="text-gray-600 fw-bold">
+        <tr *ngFor="let stat of statistics">
+          <td>{{ stat.id }}</td>
+          <td>{{ stat.title }}</td>
+          <td>{{ stat.total_students }}</td>
+          <!-- <td>{{ stat.average_rating | number : "1.2-2" }}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary me-2" (click)="downloadReport('pdf')">
+      Descargar PDF
+    </button>
+    <!-- <button class="btn btn-primary" (click)="downloadReport('excel')">
+      Descargar Excel
+    </button> -->
+  </div>
+</div>
+
+<span
+  class="spinner-border spinner-border-sm align-middle ms-2"
+  *ngIf="isLoading$ | async"
+></span>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { AuthService } from '../../../../modules/auth';
 import { URL_SERVICIOS } from 'src/app/config/config';
 
@@ -17,7 +17,7 @@ export class DashboardService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  getDashboardStats() {
+  getDashboardStats(): Observable<any> {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.token,
@@ -25,8 +25,32 @@ export class DashboardService {
 
     let URL = URL_SERVICIOS + '/dashboard-stats';
 
-    return this.http
-      .get(URL, { headers: headers })
-      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+    return this.http.get(URL, { headers: headers }).pipe(
+      map((response: any) => {
+        // Transformar los datos de ventas mensuales al formato requerido por el gráfico
+        const monthlySalesData = Object.entries(response.monthly_sales).map(
+          ([month, total]) => ({
+            x: month,
+            y: parseFloat(total as string) || 0,
+          })
+        );
+
+        return {
+          ...response,
+          monthly_sales: monthlySalesData,
+        };
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+  downloadMonthlySalesReport(): Observable<Blob> {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.token,
+    });
+
+    return this.http.get(URL_SERVICIOS + '/monthly-sales-report', {
+      headers,
+      responseType: 'blob',
+    });
   }
 }

@@ -22,6 +22,7 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,11 +52,6 @@ Route::group([
     Route::post('/checkout-with-comprobante', [CheckoutController::class, 'checkoutWithComprobante']);
 
 });
-
-// Route::group(['middleware' => ['auth:api']], function () {
-//     Route::apiResource('roles', RoleController::class);
-//     Route::apiResource('permissions', PermissionController::class);
-// });
 
 Route::group([
     'middleware' => 'api',
@@ -121,6 +117,15 @@ Route::group([
     Route::get('/tasks/courses/{courseId}/classes', [TaskController::class, 'getCourseClasses']);
     Route::get('/tasks/{taskId}', [TaskController::class, 'getStudentTask']);
 
+     //*Rutas para reportería
+     Route::get('/reports/course-statistics', [ReportController::class, 'getCourseStatistics']);
+     Route::get('/reports/student-statistics', [ReportController::class, 'getStudentStatistics']);
+    //  Route::get('/reports/course-statistics/download', [ReportController::class, 'downloadCourseStatistics']);
+    //  Route::get('/reports/student-statistics/download', [ReportController::class, 'downloadStudentStatistics']);
+    Route::match(['GET', 'OPTIONS'], '/reports/course-statistics/download', [ReportController::class, 'downloadCourseStatistics']);
+    Route::match(['GET', 'OPTIONS'], '/reports/student-statistics/download', [ReportController::class, 'downloadStudentStatistics']);
+
+    Route::get('/monthly-sales-report', [DashboardController::class, 'generateMonthlySalesReport']);
 });
 
 

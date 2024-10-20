@@ -2,16 +2,23 @@
   <div class="flex-grow-1 card-p pb-0">
     <div class="d-flex flex-stack flex-wrap">
       <div class="me-2">
-        <a href="#" class="text-dark text-hover-primary fw-bolder fs-3">
-          Generate Reports
+        <a
+          href="javascript:void(0);"
+          (click)="downloadMonthlySalesReport()"
+          class="text-dark text-hover-primary fw-bolder fs-3"
+        >
+          Ventas mensuales
         </a>
 
         <div class="text-muted fs-7 fw-bold">
-          Finance and accounting reports
+          Ingresos totales:
+          {{ totalRevenue | currency : "GTQ" : "symbol-narrow" : "1.2-2" }}
         </div>
       </div>
 
-      <div class="fw-bolder fs-3" [ngClass]="'text-' + chartColor">$24,500</div>
+      <div class="fw-bolder fs-3" [ngClass]="'text-' + chartColor">
+        {{ totalRevenue | currency : "GTQ" : "symbol-narrow" : "1.2-2" }}
+      </div>
     </div>
   </div>
 
